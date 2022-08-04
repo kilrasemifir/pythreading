@@ -23,7 +23,6 @@ class FileInfo(Thread):
         """
         result = {}
         for char in text.lower():
-            # print(self.path, char)
             if char in result:
                 result[char] += 1
             else:
