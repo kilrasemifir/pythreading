@@ -1,31 +1,31 @@
-"""
-• Considérez une situation où nous avons un fichier partagé entre
-plusieurs threads.
-• Si l'une d’un thread essaie de modifier le fichier, aucune autre thread
-ne doit être en train de lire ou d'écrire en même temps, sinon les
-modifications ne lui seront pas visibles.
-• Cependant, si un thread lit le fichier, d'autres peuvent le lire en même
-temps.
-• Implémentez cette application.
-"""
-def read(path):
-    """
-    Lit le fichier path et retourne le contenu.
-    Si aucun autre thread n'est en train d'écrire, le contenu du fichier est lisible.
-    Sinon il attend que les autres threads aient terminé d'écrire.
-    :param path: chemin du fichier
-    :return: contenu du fichier
-    """
-    pass
+import time
+from threading import Thread, Semaphore
+from time import sleep
 
+s_lire = Semaphore(1)
+s_ecrire = Semaphore(1)
 
-def write(path, text):
-    """
-    Ecrit le contenu text dans le fichier path.
-    Si aucun autre thread n'est en train de lire ou ecrire, le contenu du fichier est modifiable.
-    Sinon il attend que les autres threads aient terminé de lire ou d'écrire.
-    :param path: chemin du fichier
-    :param text: contenu du fichier
-    :return: rien
-    """
-    pass
+def reader(num,path):
+    print(f"{num} :Je veux lire le fichier")
+    with s_ecrire:
+        print(f"{num} :En train de lire")
+        with open(path, "r") as file:
+            texte = file.read()
+            print(f"{num} : {texte}")
+        print(f"{num} :J'ai finis ma lecture")
+        sleep(2)
+
+def writer(num, path, texte):
+    print(f"{num} :Je veux écrire dans le fichier")
+    with s_lire and s_ecrire:
+        print(f"{num} :En train d'écrire")
+        with open(path, "a") as file:
+            file.write(texte)
+        print(f"{num} :J'ai finis d'écrire")
+        sleep(2)
+
+Thread(target=reader, args=(1,"test.txt",)).start()
+Thread(target=reader, args=(2,"test.txt",)).start()
+Thread(target=writer, args=(3,"test.txt", "hello",)).start()
+Thread(target=writer, args=(4,"test.txt", "world!",)).start()
+Thread(target=reader, args=(5,"test.txt",)).start()

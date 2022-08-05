@@ -11,7 +11,7 @@ temps.
 • Implémentez cette application.
 """
 from threading import Lock
-
+from json import load
 
 class ThreadSafeFile:
     """
@@ -88,6 +88,20 @@ class ThreadSafeFile:
         pass
 
 
+class ThreadSafeJson(ThreadSafeFile):
+    """
+    Classe permettant d'avoir un acces concurrent sur un fichier de type json.
+    """
+    def __init__(self, filename: str):
+        super().__init__(filename)
+
+    def read(self):
+        """
+        Lit le contenu du fichier et retourne un disctionnaire contenant les données du fichier json.
+        :return: dictionnaire contenant les données du fichier json
+        """
+        result = super(ThreadSafeJson, self).read()
+        return load(result)
 
 
 if __name__ == "__main__":
@@ -104,4 +118,5 @@ if __name__ == "__main__":
     for reader in range(nb_readers):
         threads.append(Thread(target=lambda: print(f"Lecture du readers {reader} :\n{file.read()}")))
     for thread in threads:
+        thread.daemon = True
         thread.start()

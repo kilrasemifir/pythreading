@@ -17,20 +17,26 @@ class BetterThreadSafeFile:
         Si le fichier est en cours d'écriture, il attend que l'écriture se termine.
         :return: le contenu du fichier
         """
-        with self.lock_preventif:
-            self.nombre_de_lecteur += 1
-            if self.nombre_de_lecteur == 1:
-                self.lock_ecriture.acquire()
+        self.__begin_read()
 
         with open(self.filename, "r") as f:
             result = f.read()
 
+        self.__end_read()
+
+        return result
+
+    def __end_read(self):
         with self.lock_preventif:
             self.nombre_de_lecteur -= 1
             if self.nombre_de_lecteur == 0:
                 self.lock_ecriture.release()
 
-        return result
+    def __begin_read(self):
+        with self.lock_preventif:
+            self.nombre_de_lecteur += 1
+            if self.nombre_de_lecteur == 1:
+                self.lock_ecriture.acquire()
 
     def write(self, text: str):
         """
