@@ -1,4 +1,14 @@
+"""
+Exemple d'utilisation d'un design pattern Builder.
+
+Un builder est un design pattern qui permet de créer des objets à partir d'une chaines de méthodes.
+"""
+
+
 class Voiture:
+    """
+    Classe a créer avec le design pattern Builder.
+    """
     def __init__(self,
                  marque,
                  couleur,
@@ -15,6 +25,12 @@ class Voiture:
 
 
 class VehiculeBuilder:
+    """
+    Exemple d'utilisation du design pattern Builder.
+    Cette classe est un Builder de la classe voiture.
+
+    Chaque methode du builder retourne un objet de la classe builder.
+    """
     def __init__(self):
         self._marque = ""
         self._couleur = ""
@@ -53,6 +69,9 @@ class VehiculeBuilder:
         return self
 
     def build(self):
+        """
+        Methode qui retourne un objet de type Voiture.
+        """
         if self._type == "Voiture":
             return Voiture(self._marque,
                            self._couleur,

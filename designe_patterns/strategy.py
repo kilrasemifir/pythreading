@@ -1,24 +1,46 @@
+"""
+Exemple de design pattern Strategy.
+
+Dans cette exemple on va voir comment on peut changer de strategie pour le tri de liste grace au pattern strategy.
+"""
 from abc import ABC, abstractmethod
 
 
 class Context:
+    """
+    Le context joue le role de l'interface du pattern strategy.
+    """
     def __init__(self, strategy):
         self.strategy = strategy
 
-    def context_interface(self):
-        self.strategy.algorithm_interface()
-
     def sort(self, list):
+        """
+        Methode metier du context.
+        Elle permet de lancer le tri de la liste en fonction de la strategie choisi.
+        :param list: liste a trier
+        :return: liste triee
+        """
         self.strategy.sort(list)
 
 
 class Strategy(ABC):
+    """
+    Une strategy contient l'algorithme de tri.
+    """
     @abstractmethod
     def sort(self, list):
+        """
+        Methode de trie a implémenter pour la création de la strategie.
+        :param list: liste a trier
+        :return: liste triee
+        """
         pass
 
 
 class BubbleSort(Strategy):
+    """
+    Strategy de try en utilisant l'algorithme de tri bubble sort.
+    """
     def sort(self, list):
         print("BubbleSort")
         print(list)
@@ -30,6 +52,9 @@ class BubbleSort(Strategy):
 
 
 class QuickSort(Strategy):
+    """
+    Strategy de try en utilisant l'algorithme de tri quick sort.
+    """
     def sort(self, list):
         print("QuickSort")
         print(list)
@@ -54,6 +79,9 @@ class QuickSort(Strategy):
 
 
 class MergeSort(Strategy):
+    """
+    Strategy de try en utilisant l'algorithme de tri merge sort.
+    """
     def sort(self, list):
         print("MergeSort")
         print(list)
@@ -90,5 +118,12 @@ class MergeSort(Strategy):
             k += 1
 
 
-context = Context(QuickSort())
-context.sort([1, 2, 3, 4, 5, 6, 7, 8, 9, 10])
+if __name__ == "__main__":
+    list = [3, 1, 2, 5, 4]
+    context = Context(BubbleSort())
+    context.sort(list)
+    context.strategy = QuickSort()
+    context.sort(list)
+    context.strategy = MergeSort()
+    context.sort(list)
+    print(list)

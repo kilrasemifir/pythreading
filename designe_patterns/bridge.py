@@ -1,4 +1,8 @@
+"""
+Exemple de design pattern Bridge.
 
+Le design pattern Bridge permet de créer des objets qui sont "liés" entre eux.
+"""
 class CuboidAPI1:
     def produce(self, length, width, height):
         print(f"Produce a cuboid of length {length}, width {width} and height {height} Avec l'API 1")

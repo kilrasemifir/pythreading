@@ -1,3 +1,10 @@
+"""
+Exemple d'utilisation d'un design pattern Prototype.
+
+Le design pattern Prototype permet de créer des objets qui sont "copiés"
+"""
+
+
 class Moto:
     def __init__(self, moteur, couleur):
         self.couleur = couleur

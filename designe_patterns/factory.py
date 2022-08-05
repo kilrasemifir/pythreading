@@ -1,3 +1,8 @@
+"""
+Exemple de design pattern Factory.
+
+Le design pattern Factory permet de créer des objets qui sont "fabriqués" en fonction des paramètres donnés.
+"""
 from abc import abstractmethod
 
 
