@@ -2,14 +2,14 @@
 Exercice de la page 64.
 
 Enoncé:
-Nous souhaitons créer une application qui permet fabriquer différents
-types de cafés, chaque café à un cout et un nom:
-    • Colombia, Expresso, Deca,…
-• L’application permet d’ajouter différents ingrédients à votre café,
-chaque ingrédient a un cout également
-• Sirop de vanille, chocolat, lait, noisette,…
-• Modélisez et implémentez cette application en utilisant le pattern
-décorateur.
+    Nous souhaitons créer une application qui permet fabriquer différents
+    types de cafés, chaque café à un cout et un nom:
+        • Colombia, Expresso, Deca,…
+    • L’application permet d’ajouter différents ingrédients à votre café,
+    chaque ingrédient a un cout également
+    • Sirop de vanille, chocolat, lait, noisette,…
+    • Modélisez et implémentez cette application en utilisant le pattern
+    décorateur.
 """
 
 
@@ -52,6 +52,7 @@ class IngredientDecorateur:
     @property
     def nom(self):
         return f"{self.base.nom} ,{self._nom}"
+
 
 if __name__ == "__main__":
     type_cafe = {
